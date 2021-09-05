@@ -9,6 +9,7 @@ export const
             return `<style>
                         .${name} img {
                           border: 0;
+                          border-radius:12px;
                         }
                         .${name} svg:not(:root) {
                           overflow: hidden;
@@ -128,7 +129,7 @@ export const
                           top: 0;
                           left: 0;
                           bottom: 0;
-                          width: 15%;
+                          width: 10%;
                           opacity: 0.5;
                           filter: alpha(opacity=50);
                           font-size: 20px;
