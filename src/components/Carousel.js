@@ -1,7 +1,5 @@
-export default (dc, { defaultType, defaultModel, defaultView, ...config }) => {
+export default (dc, { defaultModel, defaultView, ...config }) => {
     const type = 'carousel';
-    const attrKey = config.attrCarousel;
-    const classKey = config.classCarousel;
 
     dc.addType(type, {
 
@@ -31,27 +29,24 @@ export default (dc, { defaultType, defaultModel, defaultView, ...config }) => {
                         changeProp: 1,
                         type: 'number'
                     }],
-
-                    init() {
-                        const attrs = this.getAttributes();
-                        attrs[attrKey] = 1;
-                        this.setAttributes(attrs);
-                        classKey && this.addClass(classKey);
-                    },
                     
                 script: function () {
                     // Set the ID
                     var id = this.id;
-    
+                   
                     // Set the indicators.
-                    var indicators = document.querySelectorAll(`#${id} .carousel-indicators li`);
-                    for (var indicator of indicators) {
-                        indicator.setAttribute('data-target', `#${id}`);
+                    const indicators = document.querySelectorAll(`#${id} .carousel-indicators li`);
+                    for (let i=0; i<indicators.length; i++) {
+                        const indicator = indicators[i]
+                        indicator.setAttribute('data-target', `#${id}`);   
                     }
-    
+
                     var controls = document.querySelectorAll(`#${id} .carousel-control`);
-                    for (var control of controls) {
+                    for (let i=0; i<controls.length; i++) {
+                        
+                        const control = controls[i]
                         control.setAttribute('href', `#${id}`);
+                        
                     }
     
                     var init = function () {
@@ -66,7 +61,7 @@ export default (dc, { defaultType, defaultModel, defaultView, ...config }) => {
     
                                 var Carousel = function (element, options) {
                                     this.$element = $(element)
-                                    this.$indicators = this.$element.find('.carousel-indicators')
+                                    this.$indicators = this.$element.find(`.carousel-indicators`)
                                     this.options = options
                                     this.paused = null
                                     this.sliding = null
@@ -319,9 +314,6 @@ export default (dc, { defaultType, defaultModel, defaultView, ...config }) => {
                             (function ($) {
                                 'use strict';
     
-                                // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
-                                // ============================================================
-    
                                 function transitionEnd() {
                                     var el = document.createElement('bootstrap')
     
@@ -341,7 +333,6 @@ export default (dc, { defaultType, defaultModel, defaultView, ...config }) => {
                                     return false // explicit for ie8 (  ._.)
                                 }
     
-                                // http://blog.alexmaccaw.com/css-transitions
                                 $.fn.emulateTransitionEnd = function (duration) {
                                     var called = false
                                     var $el = this
@@ -381,6 +372,7 @@ export default (dc, { defaultType, defaultModel, defaultView, ...config }) => {
                         let autoPlay = Boolean('{[ autoplay ]}');
                         if (true === autoPlay) {
                             // The carousel is moving by default.
+                            
                             jQuery(`#${id}`).carousel('cycle');
                         }
     
@@ -402,7 +394,7 @@ export default (dc, { defaultType, defaultModel, defaultView, ...config }) => {
             isComponent(el) {
     
                 if (el.tagName === 'DIV' && el.className.includes(config.prefixName) && el.getAttribute && el.getAttribute('data-type') === config.prefixName) {
-                    return {type: TYPE};
+                    return {type};
                 }
                 return '';
             }
@@ -421,20 +413,20 @@ export default (dc, { defaultType, defaultModel, defaultView, ...config }) => {
             click(event) {
                 const _class = event.target.getAttribute('class').split(' ');
     
-                if (_class.includes('carousel-indicators') || _class.includes('carousel-control')) {
+                if (_class.includes('carousel-indicators') || _class.includes('carousel-indicators')) {
                     event.preventDefault();
                     event.stopPropagation();
 
                     editor.select(this.model);
                 }
     
-                if (_class.includes('carousel-control') && _class.includes('left')) {
+                if (_class.includes('carousel-indicators') && _class.includes('left')) {
                     // Move left
                     this.model.set('moveTo', 'prev');
                     this.model.set('moveTo', null);
                 }
     
-                if (_class.includes('carousel-control') && _class.includes('right')) {
+                if (_class.includes('carousel-indicators') && _class.includes('right')) {
                     // Move right
                     this.model.set('moveTo', 'next');
                     this.model.set('moveTo', null);

@@ -1,85 +1,81 @@
-import loadComponents from './components';
+import loadComponents from './components'; 
 import loadBlocks from './blocks';
+import { defaultStyle } from './consts';
 
-const attrCarousel = "data-carousel";
-const attrCarouselBase = "data-carousel-base";
-const attrCarouselIndicator = "data-carousel-indicator";
-const attrCarouselSlide = "data-carousel-slide";
-const attrCarouselControl = "data-carousel-control";
+// component's name
+const compBaseName = 'carousel-base';
+const compIndicatorName = 'carousel-indicator';
+const compSlideName = 'carousel-slide';
+const compControlName = 'carousel-control';
 
-
-export default grapesjs.plugins.add('grapesjs-plugin-carousel', (editor, opts = {}) => {
-
+export default (editor, opts = {}) => {
     const options = {
         ...{
             // Object to extend the default carousel block, eg. `{ label: 'Carousel', attributes: { ... } }`
-      // Pass a falsy value to avoid adding the block
-      carouselBlock: {},
+            // Pass a falsy value to avoid adding the block
+            carouselBlock: {},
 
-      // Object to extend the default carousel properties, eg. `{ name: 'My Carousel', droppable: false, ... }`
-      carouselBaseProps: {},
+            // Object to extend the default carousel properties, eg. `{ name: 'My Carousel', droppable: false, ... }`
+            carouselBaseProps: {},
 
-      // Object to extend the default carousel properties
-      carouselIndicatorProps: {},
+            // Object to extend the default carousel properties
+            carouselIndicatorProps: {},
 
-      // Object to extend the default carousel slide properties
-      carouselSlideProps: {},
+            // Object to extend the default carousel slide properties
+            carouselSlideProps: {},
 
-      // Object to extend the default carousel control properties
-      carouselControlProps: {},
+            // Object to extend the default carousel control properties
+            carouselControlProps: {},
 
-      // Carousels attribute identifier (main component)
-      attrCarousel,
+            // Default class to use on carousel
+            classCarousel: "carousel",
 
-       // Carousels attribute base
-       attrCarouselBase,
+            // Default class to use on carousel base
+            classCarouselBase: "carousel-base",
 
-       // Carousel attribute identifier
-       attrCarouselIndicator,
- 
-       // Carousel slide attribute identifier
-       attrCarouselSlide,
- 
-       // Carousel control attribute identifier
-       attrCarouselControl,
+            // Default class to use on carousel control
+            classCarouselControl: 'carousel-control',
 
-          // Default class to use on carousel
-      classCarousel: "carousel",
+            // Default class to use on carousel indicator
+            classCarouselIndicator: "carousel-indicators",
 
-        // Default class to use on carousel base
-      classCarouselBase: "carousel-base",
+            // Default class to use on carousel slide
+            classCarouselSlide: "carousel-slide",
 
-      // Default class to use on carousel indicator
-      classCarouselIndicator: "carousel-indicators",
+            //Components Name
+            compBaseName,
 
-      // Default class to use on carousel slide
-      classCarouselSlide: "carousel-slide",
+            compIndicatorName,
 
-      // Default class to use on carousel control
-      classCarouselControl: "carousel-control",
+            compSlideName,
 
-                blocks: ['carousel', 'mpg'],
+            compControlName,
 
-                prefixName: 'bst-carousel',
+            blocks: ['carousel'],
 
-                gridsCategory: 'Extra',
+            prefixName: 'bts-carousel',
 
-                autoplay: true,
+            gridsCategory: 'Extra',
 
-                interval: 5000,
+            autoplay: true,
 
-                slides: 3,
+            interval: 5000,
 
-                mpgCss: 'https://ettrics.github.io/material-photo-gallery/dist/css/material-photo-gallery.css',
+            slides: 3,
 
-                mpgJs: 'https://ettrics.github.io/material-photo-gallery/dist/js/material-photo-gallery.min.js'
+            styles: null
+
         },
         ...opts,
     };
+
+    if(!options.styles) {
+        options.styles =  defaultStyle(options.prefixName)
+    }
 
     // Add components
     loadComponents(editor, options);
 
     // Add blocks
     loadBlocks(editor, options);
-});
+};

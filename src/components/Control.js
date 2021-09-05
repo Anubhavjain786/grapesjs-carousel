@@ -1,48 +1,36 @@
-import {compControlName, compBaseName} from '../consts';
+export default (dc, config) => {
+    const baseType = dc.getType(config.compBaseName);
+    const classKey = config.classCarouselControl;
+    const type = config.compControlName;
 
-export default (editor, config = {}) => {
-    const domc = editor.DomComponents;
-    const defaultType = domc.getType(compBaseName);
+    const baseModel = baseType.model;
+    const baseView = baseType.view;
 
-    const defaultModel = defaultType.model;
-    const defaultView = defaultType.view;
+    dc.addType(type, {
 
-    const TYPE = compControlName;
-
-    var model = defaultModel.extend({
-        defaults: {
-            ...defaultModel.prototype.defaults,
-            traits: []
-        }
-    }, {
-        isComponent(el) {
-
-            if (el.tagName === 'A' && el.className.includes('carousel-control')) {
-                return {type: TYPE};
+        model: baseModel.extend({
+            defaults: {
+                ...baseModel.prototype.defaults,
+                traits: [],
+                ...config.carouselControlProps
+            },
+        }, {
+            isComponent(el) {
+                if (el.tagName === 'A' && el.className.includes(classKey)) {
+                    return {type};
+                }
+                return '';
             }
-            return '';
-        }
-    });
+        }),
 
-
-    var view = defaultView.extend({
-        init() {
-
-        },
-
-        events: {
-            click: 'click'
-        },
-
-        click(event) {
-            event.preventDefault();
-        },
-    });
-
-    domc.addType(TYPE, {
-
-        model: model,
-
-        view: view
+        view: baseView.extend({
+            events: {
+                click: 'click'
+            },
+            
+            click(event) {
+                event.preventDefault();
+            },
+        })
     });
 }

@@ -1,10 +1,8 @@
-import Base from './components/Base';
-import Indicator from './components/Indictor';
-import Slide from './components/Slide';
-import Control from './components/Control';
-import Carousel from './components/Carousel';
-// mpg gallery
-import MpgGallery from './components/Mpg';
+import Base from './Base';
+import Indicator from './Indictor';
+import Slide from './Slide';
+import Control from './Control';
+import Carousel from './Carousel';
 
 export default (editor, config = {}) => {
   const dc = editor.DomComponents;
@@ -23,7 +21,4 @@ export default (editor, config = {}) => {
   Slide(dc, opts);
   Control(dc, opts);
   Carousel(dc, opts);
-  
-  // MPG Gallery
-  MpgGallery(dc, opts);
 }
